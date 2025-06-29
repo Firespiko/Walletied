@@ -89,64 +89,64 @@
     background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff4500, #8a2be2, #00ff00);
     background-size: 400% 400%;
     animation: crypto-gradient 6s ease infinite, crypto-float 12s ease-in-out infinite;
-    opacity: 0.8;
-    filter: blur(1px);
-    box-shadow: 0 0 30px rgba(255, 0, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4);
+    opacity: 0.9;
+    filter: blur(2px);
+    box-shadow: 0 0 40px rgba(255, 0, 255, 0.8), 0 0 80px rgba(0, 255, 255, 0.6);
   }
   
   .crypto-bubble-1 {
-    width: 150px;
-    height: 150px;
-    top: 15%;
-    left: 10%;
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 5%;
     animation-delay: 0s;
   }
   
   .crypto-bubble-2 {
-    width: 200px;
-    height: 200px;
-    top: 50%;
-    left: 75%;
+    width: 250px;
+    height: 250px;
+    top: 45%;
+    left: 70%;
     animation-delay: -3s;
   }
   
   .crypto-bubble-3 {
-    width: 120px;
-    height: 120px;
-    top: 75%;
-    left: 15%;
+    width: 180px;
+    height: 180px;
+    top: 70%;
+    left: 10%;
     animation-delay: -6s;
   }
   
   .crypto-bubble-4 {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     top: 5%;
-    left: 80%;
+    left: 75%;
     animation-delay: -2s;
   }
   
   .crypto-bubble-5 {
-    width: 160px;
-    height: 160px;
-    top: 35%;
-    left: 35%;
+    width: 190px;
+    height: 190px;
+    top: 30%;
+    left: 30%;
     animation-delay: -4s;
   }
 
   .crypto-bubble-6 {
-    width: 100px;
-    height: 100px;
-    top: 60%;
-    left: 5%;
+    width: 160px;
+    height: 160px;
+    top: 55%;
+    left: 0%;
     animation-delay: -1s;
   }
 
   .crypto-bubble-7 {
-    width: 140px;
-    height: 140px;
-    top: 85%;
-    left: 60%;
+    width: 170px;
+    height: 170px;
+    top: 80%;
+    left: 55%;
     animation-delay: -5s;
   }
   
@@ -159,7 +159,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    padding: 3px;
+    padding: 4px;
     background: linear-gradient(45deg, #1e1b4b, #3730a3, #6366f1, #8b5cf6, #a855f7, #1e1b4b);
     background-size: 300% 300%;
     border-radius: 0;
@@ -176,7 +176,7 @@
 
   .ethereum-section:hover {
     background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #3730a3 50%, #4338ca 75%, #6366f1 100%);
-    box-shadow: 0 0 50px rgba(99, 102, 241, 0.4), inset 0 0 50px rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 80px rgba(99, 102, 241, 0.6), inset 0 0 60px rgba(139, 92, 246, 0.3);
   }
 
   .solana-section {
@@ -188,7 +188,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    padding: 3px;
+    padding: 4px;
     background: linear-gradient(45deg, #0891b2, #06b6d4, #00d4aa, #8b5cf6, #a855f7, #0891b2);
     background-size: 300% 300%;
     border-radius: 0;
@@ -204,44 +204,110 @@
   }
 
   .solana-section:hover {
-    background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.3) 0%, rgba(0, 0, 0, 0.9) 70%);
-    box-shadow: 0 0 60px rgba(6, 182, 212, 0.6), inset 0 0 40px rgba(0, 212, 170, 0.3);
+    background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.4) 0%, rgba(0, 0, 0, 0.9) 70%);
+    box-shadow: 0 0 100px rgba(6, 182, 212, 0.8), inset 0 0 50px rgba(0, 212, 170, 0.4);
   }
   
-  .ethereum-border-animation {
-    background: conic-gradient(from 0deg, #1e40af, #3b82f6, #60a5fa, #8b5cf6, #a855f7, #1e40af);
-    animation: spin 3s linear infinite;
-    border-radius: 0.5rem;
+  .ethereum-button {
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    background: rgba(139, 92, 246, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.5s ease;
   }
-  
-  .solana-border-animation {
-    background: conic-gradient(from 0deg, #06b6d4, #0891b2, #00d4aa, #8b5cf6, #a855f7, #06b6d4);
-    animation: spin 3s linear infinite;
-    border-radius: 0.5rem;
+
+  .ethereum-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(45deg, #8b5cf6, #a855f7, #6366f1, #3b82f6, #8b5cf6);
+    background-size: 200% 200%;
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    animation: ethereum-glow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ethereum-button:hover::before {
+    opacity: 1;
+  }
+
+  .ethereum-button:hover {
+    background: rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+
+  .solana-button {
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    background: rgba(6, 182, 212, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.5s ease;
+  }
+
+  .solana-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(45deg, #06b6d4, #0891b2, #00d4aa, #8b5cf6, #06b6d4);
+    background-size: 200% 200%;
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    animation: solana-glow 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .solana-button:hover::before {
+    opacity: 1;
+  }
+
+  .solana-button:hover {
+    background: rgba(6, 182, 212, 0.2);
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
   }
   
   .crypto-button {
     position: relative;
     overflow: hidden;
     border-radius: 0.5rem;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
   }
   
   .crypto-button::before {
     content: '';
     position: absolute;
     inset: 0;
-    padding: 2px;
-    background: conic-gradient(from 0deg, transparent, currentColor, transparent);
+    padding: 1px;
+    background: linear-gradient(45deg, currentColor, transparent, currentColor);
+    background-size: 200% 200%;
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: xor;
-    animation: spin 3s linear infinite;
+    animation: button-glow 2s linear infinite;
     opacity: 0;
     transition: opacity 0.3s ease;
   }
   
   .crypto-button:hover::before {
     opacity: 1;
+  }
+
+  .crypto-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
   }
   
   .wallet-card {
@@ -258,11 +324,12 @@
     position: absolute;
     inset: 0;
     padding: 2px;
-    background: conic-gradient(from 0deg, var(--wallet-gradient, #3b82f6), transparent, var(--wallet-gradient, #3b82f6));
+    background: linear-gradient(45deg, var(--wallet-gradient, #3b82f6), transparent, var(--wallet-gradient, #3b82f6));
+    background-size: 200% 200%;
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: xor;
-    animation: spin 4s linear infinite;
+    animation: wallet-glow 4s linear infinite;
     opacity: 0.6;
   }
 
@@ -283,9 +350,9 @@
   
   @keyframes crypto-float {
     0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
-    25% { transform: translateY(-30px) translateX(20px) scale(1.1); }
-    50% { transform: translateY(15px) translateX(-15px) scale(0.9); }
-    75% { transform: translateY(-20px) translateX(10px) scale(1.05); }
+    25% { transform: translateY(-40px) translateX(30px) scale(1.1); }
+    50% { transform: translateY(20px) translateX(-20px) scale(0.9); }
+    75% { transform: translateY(-30px) translateX(15px) scale(1.05); }
   }
 
   @keyframes ethereum-border {
@@ -299,10 +366,29 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+
+  @keyframes ethereum-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes solana-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes button-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes wallet-glow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   
   .glassmorphism {
