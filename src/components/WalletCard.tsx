@@ -27,10 +27,11 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
     }
   };
 
-  const buttonColor = network === 'Ethereum' ? '#3b82f6' : '#06b6d4';
+  const buttonColor = network === 'Ethereum' ? '#8b5cf6' : '#06b6d4';
+  const cardTheme = network === 'Ethereum' ? 'ethereum-theme' : 'solana-theme';
 
   return (
-    <Card className="wallet-card text-white font-mono">
+    <Card className={`wallet-card ${cardTheme} text-white font-mono`}>
       <CardHeader>
         <CardTitle className="text-xl text-center">{network} Wallet</CardTitle>
       </CardHeader>
