@@ -1,6 +1,5 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 interface WalletCardProps {
@@ -28,8 +27,10 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
     }
   };
 
+  const buttonColor = network === 'Ethereum' ? '#3b82f6' : '#06b6d4';
+
   return (
-    <Card className="wallet-card text-white">
+    <Card className="wallet-card text-white font-mono">
       <CardHeader>
         <CardTitle className="text-xl text-center">{network} Wallet</CardTitle>
       </CardHeader>
@@ -37,14 +38,13 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-sm opacity-80">Public Key</h3>
-            <Button
-              size="sm"
-              variant="ghost"
+            <button
               onClick={() => copyToClipboard(publicKey, 'public')}
-              className="text-xs h-6 px-2 hover:bg-white/10"
+              className="crypto-button text-xs h-6 px-2 hover:bg-white/10 bg-transparent border border-white/20 rounded text-white"
+              style={{ color: buttonColor }}
             >
               {copiedPublic ? 'Copied!' : 'Copy'}
-            </Button>
+            </button>
           </div>
           <div className="bg-black/20 rounded-lg p-3 font-mono text-sm break-all">
             {publicKey}
@@ -54,14 +54,13 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-sm opacity-80">Private Key</h3>
-            <Button
-              size="sm"
-              variant="ghost"
+            <button
               onClick={() => copyToClipboard(privateKey, 'private')}
-              className="text-xs h-6 px-2 hover:bg-white/10"
+              className="crypto-button text-xs h-6 px-2 hover:bg-white/10 bg-transparent border border-white/20 rounded text-white"
+              style={{ color: buttonColor }}
             >
               {copiedPrivate ? 'Copied!' : 'Copy'}
-            </Button>
+            </button>
           </div>
           <div className="bg-black/20 rounded-lg p-3 font-mono text-sm break-all">
             {privateKey}

@@ -27,14 +27,15 @@ const Solana = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-blue-900 to-blue-600 p-8">
-      <Button 
+    <div className="min-h-screen bg-gradient-to-br from-black via-blue-900 to-blue-600 p-8 font-mono">
+      <button 
         onClick={() => navigate('/')}
-        className="mb-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
+        className="crypto-button mb-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 px-4 py-2 rounded text-white flex items-center"
+        style={{ color: '#06b6d4' }}
       >
         <ArrowUp className="w-4 h-4 mr-2 rotate-[-45deg]" />
         Back to Home
-      </Button>
+      </button>
 
       <div className="max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold text-white text-center mb-12 tracking-wide">
@@ -53,16 +54,17 @@ const Solana = () => {
                 value={secretPhrase}
                 onChange={(e) => setSecretPhrase(e.target.value)}
                 placeholder="Paste your secret phrase here"
-                className="bg-white/10 border-blue-400/30 text-white placeholder:text-white/60"
+                className="bg-white/10 border-blue-400/30 text-white placeholder:text-white/60 font-mono"
               />
             </div>
 
-            <Button 
+            <button 
               onClick={handleGeneratePhrase}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="crypto-button w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-mono"
+              style={{ color: '#06b6d4' }}
             >
               Generate Secret Phrase
-            </Button>
+            </button>
 
             <div className="space-y-2">
               <Label htmlFor="password">Password (Optional)</Label>
@@ -72,17 +74,18 @@ const Solana = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
-                className="bg-white/10 border-blue-400/30 text-white placeholder:text-white/60"
+                className="bg-white/10 border-blue-400/30 text-white placeholder:text-white/60 font-mono"
               />
             </div>
 
-            <Button 
+            <button 
               onClick={handleCreateWallet}
               disabled={!secretPhrase}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:opacity-50 shadow-lg shadow-blue-500/25"
+              className="crypto-button w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:opacity-50 shadow-lg shadow-blue-500/25 px-4 py-2 rounded text-white font-mono"
+              style={{ color: '#06b6d4' }}
             >
               Create Wallet
-            </Button>
+            </button>
           </CardContent>
         </Card>
 
