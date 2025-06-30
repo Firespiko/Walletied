@@ -83,17 +83,17 @@ const WalletList = ({ wallets, network, secretPhrase, onClearWallets, onAddWalle
     <div className="w-full max-w-4xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">{network} Wallet</h1>
+        <h1 className="text-xl font-bold text-white">{network} Wallet</h1>
         <div className="flex gap-2">
           <button
             onClick={onAddWallet}
-            className="px-4 py-2 bg-white text-black rounded hover:bg-gray-200 transition-colors text-sm"
+            className="px-4 py-2 bg-white text-black rounded hover:bg-gray-200 transition-all duration-200 text-sm hover:scale-105"
           >
             Add Wallet
           </button>
           <button
             onClick={onClearWallets}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm"
+            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all duration-200 text-sm hover:scale-105"
           >
             Clear Wallets
           </button>
@@ -101,23 +101,25 @@ const WalletList = ({ wallets, network, secretPhrase, onClearWallets, onAddWalle
       </div>
 
       {/* Secret Phrase Section */}
-      <Card className="glassmorphism text-white border-white/20 mb-6">
+      <Card className="glassmorphism text-white border-white/20 mb-6 transition-all duration-300">
         <CardHeader 
-          className="cursor-pointer flex flex-row items-center justify-between py-4"
+          className="cursor-pointer flex flex-row items-center justify-between py-4 transition-colors duration-200 hover:bg-white/5"
           onClick={() => setIsSecretPhraseOpen(!isSecretPhraseOpen)}
         >
-          <CardTitle className="text-lg">Your Secret Phrase</CardTitle>
+          <CardTitle className="text-base">Your Secret Phrase</CardTitle>
           <ChevronDown 
-            className={`w-5 h-5 transition-transform ${isSecretPhraseOpen ? 'rotate-180' : ''}`}
+            className={`w-5 h-5 transition-transform duration-300 ${isSecretPhraseOpen ? 'rotate-180' : ''}`}
           />
         </CardHeader>
-        {isSecretPhraseOpen && (
-          <CardContent className="pt-0">
+        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isSecretPhraseOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <CardContent className="pt-0 pb-4">
             <div className="grid grid-cols-4 gap-2 mb-4">
               {secretPhrase.split(' ').map((word, index) => (
                 <div 
                   key={index}
-                  className="bg-black/30 rounded px-3 py-2 text-center text-sm font-mono"
+                  className="bg-black/30 rounded px-3 py-2 text-center text-sm font-mono transition-colors duration-200 hover:bg-black/40"
                 >
                   {word}
                 </div>
@@ -130,22 +132,26 @@ const WalletList = ({ wallets, network, secretPhrase, onClearWallets, onAddWalle
               </span>
               <button
                 onClick={() => copyToClipboard(secretPhrase, 'secret-phrase')}
-                className="text-xs text-blue-400 hover:text-blue-300"
+                className="text-xs text-blue-400 hover:text-blue-300 transition-colors duration-200"
               >
                 {copiedItems.has('secret-phrase') ? 'Copied!' : 'Copy All'}
               </button>
             </div>
           </CardContent>
-        )}
+        </div>
       </Card>
 
       {/* Wallets List */}
       <div className="space-y-4">
-        {wallets.map((wallet) => (
-          <Card key={wallet.id} className="glassmorphism text-white border-white/20">
+        {wallets.map((wallet, index) => (
+          <Card 
+            key={wallet.id} 
+            className="glassmorphism text-white border-white/20 animate-fade-in transition-all duration-200 hover:bg-white/5"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
             <CardHeader className="flex flex-row items-center justify-between py-4">
-              <CardTitle className="text-lg">Wallet {wallet.id}</CardTitle>
-              <button className="text-red-400 hover:text-red-300">
+              <CardTitle className="text-base">Wallet {wallet.id}</CardTitle>
+              <button className="text-red-400 hover:text-red-300 transition-colors duration-200">
                 <Trash2 className="w-4 h-4" />
               </button>
             </CardHeader>
@@ -153,7 +159,7 @@ const WalletList = ({ wallets, network, secretPhrase, onClearWallets, onAddWalle
               {/* Public Key */}
               <div>
                 <h3 className="text-sm text-gray-300 mb-2">Public Key</h3>
-                <div className="bg-black/30 rounded p-3 font-mono text-sm break-all">
+                <div className="bg-black/30 rounded p-3 font-mono text-sm break-all transition-colors duration-200 hover:bg-black/40">
                   {wallet.publicKey}
                 </div>
               </div>
@@ -164,7 +170,7 @@ const WalletList = ({ wallets, network, secretPhrase, onClearWallets, onAddWalle
                   <h3 className="text-sm text-gray-300">Private Key</h3>
                   <button
                     onClick={() => togglePrivateKeyVisibility(wallet.id)}
-                    className="flex items-center gap-1 text-xs px-2 py-1 rounded border border-white/20 hover:bg-white/10"
+                    className="flex items-center gap-1 text-xs px-2 py-1 rounded border border-white/20 hover:bg-white/10 transition-all duration-200"
                     style={{ color: buttonColor }}
                   >
                     {visiblePrivateKeys.has(wallet.id) ? (
@@ -180,7 +186,7 @@ const WalletList = ({ wallets, network, secretPhrase, onClearWallets, onAddWalle
                     )}
                   </button>
                 </div>
-                <div className="bg-black/30 rounded p-3 font-mono text-sm break-all">
+                <div className="bg-black/30 rounded p-3 font-mono text-sm break-all transition-colors duration-200 hover:bg-black/40">
                   {visiblePrivateKeys.has(wallet.id) ? wallet.privateKey : maskPrivateKey(wallet.privateKey)}
                 </div>
               </div>
