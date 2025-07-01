@@ -1,73 +1,109 @@
-# Welcome to your Lovable project
+# 💼 Walletied
 
-## Project info
+**Walletied** is a sleek and secure wallet generator for both **Solana** and **Ethereum** networks. Built with performance, user experience, and security in mind, Walletied uses modern libraries like **ShadCN UI**, **Tailwind CSS**, **React Hook Form**, and cryptographic primitives like **ethers.js**, **@solana/web3.js**, and **bip39** to generate fully client-side, non-custodial wallets.
 
-**URL**: https://lovable.dev/projects/6d2b98a7-47c6-40c1-8265-5ee2a52f7e88
+> 🔒 Your keys never leave your device.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## ⚡ Features
 
-**Use Lovable**
+- 🔑 Generate Solana and Ethereum wallets securely in the browser
+- 🧠 BIP39 Mnemonic phrase generation
+- 👁️ Reveal/hide private keys with password gating
+- 📋 Copy public/private keys or secret phrase
+- 🧼 Clear all wallets with one click
+- ➕ Add new wallets dynamically
+- 🎨 Beautiful glassmorphic UI with light/dark theme support
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6d2b98a7-47c6-40c1-8265-5ee2a52f7e88) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Tech Stack
 
-**Use your preferred IDE**
+| Layer           | Technology                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------------ |
+| Frontend        | [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)                                                  |
+| UI Framework    | [ShadCN UI](https://ui.shadcn.com/) + [TailwindCSS](https://tailwindcss.com/)                                |
+| Form Handling   | [React Hook Form](https://react-hook-form.com/)                                                              |
+| Ethereum        | [ethers.js](https://docs.ethers.org/v6/)                                                                     |
+| Solana          | [@solana/web3.js](https://solana-labs.github.io/solana-web3.js/)                                             |
+| Mnemonic        | [bip39](https://www.npmjs.com/package/bip39), [ed25519-hd-key](https://www.npmjs.com/package/ed25519-hd-key) |
+| Clipboard Utils | [lucide-react](https://lucide.dev/icons), [bs58](https://github.com/cryptocoinjs/bs58)                       |
+| Dialog/Access   | [@radix-ui/react-dialog](https://www.radix-ui.com/primitives/docs/components/dialog)                         |
+| Validation      | [zod](https://github.com/colinhacks/zod)                                                                     |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚀 Getting Started
 
-Follow these steps:
+### 1. Clone the repository
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+````bash
+git clone https://github.com/your-username/walletied.git
+cd walletied
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. Install dependencies
+```bash
+npm install
+# or
+yarn
+````
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Run development server
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit http://localhost:5173 to use the app.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📦 Build
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📁 Project Structure
 
-## What technologies are used for this project?
+```bash
+src/
+│
+├── components/      # UI Components (shadcn based)
+├── pages/           # Routes
+├── lib/             # Wallet generation, encryption utils
+├── hooks/           # Custom hooks
+└── styles/          # Tailwind and global styles
+```
 
-This project is built with:
+## 🧠 Wallet Generation
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+**Ethereum**:
 
-## How can I deploy this project?
+Uses `ethers.Wallet.createRandom()` to derive keys from BIP39 mnemonic
 
-Simply open [Lovable](https://lovable.dev/projects/6d2b98a7-47c6-40c1-8265-5ee2a52f7e88) and click on Share -> Publish.
+**Solana**:
 
-## Can I connect a custom domain to my Lovable project?
+Uses `bip39` + `ed25519-hd-key` to derive seed → keypair with `@solana/web3.js`
 
-Yes, you can!
+## 🔐 Security Notes
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- Wallets and keys are stored in memory (not persisted)
+- Password gating is used before revealing private keys
+- No external API call is made — it's fully client-side
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 📌 Future Roadmap
+
+- Export wallet to Keystore / JSON
+- Integrate with Metamask / Phantom for import
+- Encrypt wallets with password + localStorage
+- Mobile-first responsive enhancements
+
+## 🧑‍💻 Author
+
+K.S. Adithya – [@ksadithya](https://github.com/ksadithya)
+
+## 📄 License
+
+MIT
