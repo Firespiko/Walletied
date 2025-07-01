@@ -1,4 +1,8 @@
-
+import { generateMnemonic, mnemonicToSeed, mnemonicToSeedSync } from "bip39";
+import { derivePath } from "ed25519-hd-key";
+import { Keypair } from "@solana/web3.js";
+import nacl from "tweetnacl";
+import bs58 from "bs58";
 // Solana wallet generation utilities
 // This is a placeholder structure for future implementation
 
@@ -8,28 +12,24 @@ export interface SolanaWallet {
   address?: string;
 }
 
-export const generateSolanaWallet = (secretPhrase: string): SolanaWallet => {
-  // Placeholder implementation - replace with actual Solana wallet derivation
-  console.log('Generating Solana wallet from phrase:', secretPhrase);
-  
-  // Demo wallet for development
+export async function generateSeed() {
+  const mnemonic = generateMnemonic();
+  const seed = await mnemonicToSeedSync(mnemonic.toString());
+  return [seed, mnemonic];
+}
+
+export const generateSolanaWallet = (
+  seed: string,
+  currentIndex: number
+): SolanaWallet => {
+  const path = `m/44'/501'/${currentIndex}'/0'`;
+  const derivedSeed = derivePath(path, seed).key;
+  const secret = nacl.sign.keyPair.fromSeed(derivedSeed).secretKey;
+  const keypair = Keypair.fromSecretKey(secret);
+
   return {
-    publicKey: 'Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS',
-    privateKey: '5Kd3NBUAdUnhyzenEwVLy9pBKxSwXvE9FMPyR4UHparTKyTZJEd',
-    address: 'Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS'
+    publicKey: keypair.publicKey.toBase58(),
+    privateKey: bs58.encode(keypair.secretKey),
+    address: keypair.publicKey.toString(),
   };
-};
-
-export const deriveSolanaFromMnemonic = (mnemonic: string, derivationPath?: string): SolanaWallet => {
-  // Future implementation for BIP44 derivation
-  // Standard Solana derivation path: m/44'/501'/0'/0'
-  const path = derivationPath || "m/44'/501'/0'/0'";
-  console.log('Deriving Solana wallet from mnemonic with path:', path);
-  
-  return generateSolanaWallet(mnemonic);
-};
-
-export const validateSolanaAddress = (address: string): boolean => {
-  // Basic Solana address validation (placeholder)
-  return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address);
 };

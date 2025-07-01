@@ -1,13 +1,12 @@
-
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import WalletList from '@/components/WalletList';
-import { generateEthereumWallet } from '@/lib/ethereum';
-import { ArrowUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import WalletList from "@/components/WalletList";
+import { generateEthereumWallet, generateSeed } from "@/lib/ethereum";
+import { ArrowUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Wallet {
   id: number;
@@ -17,25 +16,37 @@ interface Wallet {
 
 const Ethereum = () => {
   const navigate = useNavigate();
-  const [secretPhrase, setSecretPhrase] = useState('');
-  const [password, setPassword] = useState('');
+  const [secretPhrase, setSecretPhrase] = useState("");
+  const [password, setPassword] = useState("");
   const [wallets, setWallets] = useState<Wallet[]>([]);
   const [walletCounter, setWalletCounter] = useState(1);
+  const [seed, setSeed] = useState<Buffer>();
 
-  const handleGeneratePhrase = () => {
-    const demoPhrase = "danger scissors snow garbage defy bicycle decide leopard general dutch upper travel";
-    setSecretPhrase(demoPhrase);
+  const handleRemoveWallet = (id: number) => {
+    setWallets((prev) => prev.filter((wallet) => wallet.id !== id));
   };
 
+  async function handleGeneratePhrase() {
+    const [seed, phrase] = await generateSeed();
+    if (typeof seed === "string") {
+      return;
+    }
+    if (typeof phrase === "object") {
+      return;
+    }
+    setSeed(seed);
+    setSecretPhrase(phrase);
+  }
+
   const handleCreateWallet = () => {
-    const newWallet = generateEthereumWallet(secretPhrase);
+    const newWallet = generateEthereumWallet(seed, walletCounter);
     const wallet: Wallet = {
       id: walletCounter,
       publicKey: newWallet.publicKey,
-      privateKey: newWallet.privateKey
+      privateKey: newWallet.privateKey,
     };
-    setWallets(prev => [...prev, wallet]);
-    setWalletCounter(prev => prev + 1);
+    setWallets((prev) => [...prev, wallet]);
+    setWalletCounter((prev) => prev + 1);
   };
 
   const handleAddWallet = () => {
@@ -47,16 +58,16 @@ const Ethereum = () => {
   const handleClearWallets = () => {
     setWallets([]);
     setWalletCounter(1);
-    setSecretPhrase(''); // Clear the secret phrase
-    setPassword(''); // Clear the password
+    setSecretPhrase(""); // Clear the secret phrase
+    setPassword(""); // Clear the password
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900 p-8 font-mono">
-      <button 
-        onClick={() => navigate('/')}
+      <button
+        onClick={() => navigate("/")}
         className="crypto-button mb-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 px-4 py-2 rounded text-white flex items-center"
-        style={{ color: '#3b82f6' }}
+        style={{ color: "#3b82f6" }}
       >
         <ArrowUp className="w-4 h-4 mr-2 rotate-[-45deg]" />
         Back to Home
@@ -70,11 +81,18 @@ const Ethereum = () => {
 
           <Card className="glassmorphism text-white border-white/20 animate-scale-in">
             <CardHeader className="pb-6">
-              <CardTitle className="text-2xl text-center font-bold">Create Your Wallet</CardTitle>
+              <CardTitle className="text-2xl text-center font-bold">
+                Create Your Wallet
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 px-8 pb-8">
               <div className="space-y-2">
-                <Label htmlFor="secret-phrase" className="text-base font-medium">Secret Phrase</Label>
+                <Label
+                  htmlFor="secret-phrase"
+                  className="text-base font-medium"
+                >
+                  Secret Phrase
+                </Label>
                 <Input
                   id="secret-phrase"
                   value={secretPhrase}
@@ -84,16 +102,17 @@ const Ethereum = () => {
                 />
               </div>
 
-              <button 
+              <button
                 onClick={handleGeneratePhrase}
-                className="crypto-button w-full h-12 bg-blue-600 hover:bg-blue-700 px-4 rounded text-white font-mono text-base font-medium transition-all duration-200 hover:scale-[1.02]"
-                style={{ color: '#3b82f6' }}
+                className="crypto-button w-full h-12 bg-blue-600 hover:bg-blue-700 text-blue-300  px-4 rounded hover:text-white font-mono text-base font-medium transition-all duration-200 hover:scale-[1.02]"
               >
                 Generate Secret Phrase
               </button>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-base font-medium">Password (Optional)</Label>
+                <Label htmlFor="password" className="text-base font-medium">
+                  Password (Optional)
+                </Label>
                 <Input
                   id="password"
                   type="password"
@@ -104,11 +123,10 @@ const Ethereum = () => {
                 />
               </div>
 
-              <button 
+              <button
                 onClick={handleCreateWallet}
                 disabled={!secretPhrase}
-                className="crypto-button w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 px-4 rounded text-white font-mono text-base font-medium transition-all duration-200 hover:scale-[1.02] disabled:hover:scale-100"
-                style={{ color: '#3b82f6' }}
+                className="crypto-button w-full h-12 bg-gradient-to-r text-blue-300 from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 px-4 rounded hover:text-white font-mono text-base font-medium transition-all duration-200 hover:scale-[1.02] disabled:hover:scale-100"
               >
                 Create Wallet
               </button>
@@ -121,8 +139,11 @@ const Ethereum = () => {
             wallets={wallets}
             network="Ethereum"
             secretPhrase={secretPhrase}
+            password={password}
+            setPassword={setPassword}
             onClearWallets={handleClearWallets}
             onAddWallet={handleAddWallet}
+            onRemoveWallet={handleRemoveWallet}
           />
         </div>
       )}

@@ -1,10 +1,15 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 interface WalletCardProps {
   publicKey: string;
@@ -16,13 +21,13 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
   const [copiedPublic, setCopiedPublic] = useState(false);
   const [copiedPrivate, setCopiedPrivate] = useState(false);
   const [showPrivateKey, setShowPrivateKey] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const copyToClipboard = async (text: string, type: 'public' | 'private') => {
+  const copyToClipboard = async (text: string, type: "public" | "private") => {
     try {
       await navigator.clipboard.writeText(text);
-      if (type === 'public') {
+      if (type === "public") {
         setCopiedPublic(true);
         setTimeout(() => setCopiedPublic(false), 2000);
       } else {
@@ -30,15 +35,15 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
         setTimeout(() => setCopiedPrivate(false), 2000);
       }
     } catch (err) {
-      console.error('Failed to copy: ', err);
+      console.error("Failed to copy: ", err);
     }
   };
 
   const handleRevealPrivateKey = () => {
-    if (password === 'reveal') {
+    if (password === "reveal") {
       setShowPrivateKey(true);
       setIsDialogOpen(false);
-      setPassword('');
+      setPassword("");
     } else {
       alert('Incorrect password! Hint: type "reveal"');
     }
@@ -53,12 +58,12 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
   };
 
   const maskPrivateKey = (key: string) => {
-    if (key.length <= 8) return '•'.repeat(key.length);
-    return key.substring(0, 4) + '•'.repeat(key.length - 8) + key.substring(key.length - 4);
+    if (key.length <= 8) return "•".repeat(key.length);
+    // return key.substring(0, 4) + '•'.repeat(key.length - 8) + key.substring(key.length - 4);
   };
 
-  const buttonColor = network === 'Ethereum' ? '#8b5cf6' : '#06b6d4';
-  const cardTheme = network === 'Ethereum' ? 'ethereum-theme' : 'solana-theme';
+  const buttonColor = network === "Ethereum" ? "#8b5cf6" : "#06b6d4";
+  const cardTheme = network === "Ethereum" ? "ethereum-theme" : "solana-theme";
 
   return (
     <Card className={`wallet-card ${cardTheme} text-white font-mono`}>
@@ -70,11 +75,11 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-sm opacity-80">Public Key</h3>
             <button
-              onClick={() => copyToClipboard(publicKey, 'public')}
+              onClick={() => copyToClipboard(publicKey, "public")}
               className="crypto-button text-xs h-6 px-2 hover:bg-white/10 bg-transparent border border-white/20 rounded text-white"
               style={{ color: buttonColor }}
             >
-              {copiedPublic ? 'Copied!' : 'Copy'}
+              {copiedPublic ? "Copied!" : "Copy"}
             </button>
           </div>
           <div className="bg-black/20 rounded-lg p-3 font-mono text-sm break-all">
@@ -91,16 +96,20 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
                 className="crypto-button text-xs h-6 px-2 hover:bg-white/10 bg-transparent border border-white/20 rounded text-white flex items-center gap-1"
                 style={{ color: buttonColor }}
               >
-                {showPrivateKey ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-                {showPrivateKey ? 'Hide' : 'Show'}
+                {showPrivateKey ? (
+                  <EyeOff className="w-3 h-3" />
+                ) : (
+                  <Eye className="w-3 h-3" />
+                )}
+                {showPrivateKey ? "Hide" : "Show"}
               </button>
               {showPrivateKey && (
                 <button
-                  onClick={() => copyToClipboard(privateKey, 'private')}
+                  onClick={() => copyToClipboard(privateKey, "private")}
                   className="crypto-button text-xs h-6 px-2 hover:bg-white/10 bg-transparent border border-white/20 rounded text-white"
                   style={{ color: buttonColor }}
                 >
-                  {copiedPrivate ? 'Copied!' : 'Copy'}
+                  {copiedPrivate ? "Copied!" : "Copy"}
                 </button>
               )}
             </div>
@@ -124,7 +133,8 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
           </DialogHeader>
           <div className="space-y-4">
             <p className="text-sm text-gray-300">
-              This will reveal your private key. Please enter the password to continue.
+              This will reveal your private key. Please enter the password to
+              continue.
             </p>
             <Input
               type="password"
@@ -132,17 +142,17 @@ const WalletCard = ({ publicKey, privateKey, network }: WalletCardProps) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="bg-gray-800 border-gray-600 text-white"
-              onKeyPress={(e) => e.key === 'Enter' && handleRevealPrivateKey()}
+              onKeyPress={(e) => e.key === "Enter" && handleRevealPrivateKey()}
             />
             <div className="flex gap-2 justify-end">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setIsDialogOpen(false)}
                 className="border-gray-600 text-gray-300 hover:bg-gray-800"
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={handleRevealPrivateKey}
                 className="bg-blue-600 hover:bg-blue-700"
               >

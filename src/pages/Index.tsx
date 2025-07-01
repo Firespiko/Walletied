@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -6,6 +6,10 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col font-mono">
       {/* Choose Your Poison Header */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="crypto-bubble crypto-bubble-1"></div>
+        <div className="crypto-bubble crypto-bubble-2"></div>
+      </div>
       <div className="flex justify-center items-center py-8 bg-black">
         <h1 className="text-4xl font-bold neon-text-rainbow animate-pulse">
           Choose Your Poison
@@ -14,9 +18,9 @@ const Index = () => {
 
       <div className="flex flex-1">
         {/* Ethereum Half */}
-        <div 
+        <div
           className="ethereum-section w-1/2 bg-black crypto-bubbles cursor-pointer group relative flex items-center justify-center transition-all duration-800"
-          onClick={() => navigate('/ethereum')}
+          onClick={() => navigate("/ethereum")}
         >
           <div className="absolute inset-0 opacity-30">
             <div className="crypto-bubble crypto-bubble-1"></div>
@@ -33,9 +37,9 @@ const Index = () => {
         </div>
 
         {/* Solana Half */}
-        <div 
+        <div
           className="solana-section w-1/2 bg-black crypto-bubbles cursor-pointer group relative flex items-center justify-center transition-all duration-800"
-          onClick={() => navigate('/solana')}
+          onClick={() => navigate("/solana")}
         >
           <div className="absolute inset-0 opacity-30">
             <div className="crypto-bubble crypto-bubble-1"></div>
